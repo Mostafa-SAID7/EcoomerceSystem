@@ -1,0 +1,21 @@
+header .nav-link {
+    color: #333;
+    font-weight: 500;
+}
+
+header .nav-link:hover {
+    color: #0d6efd;
+}
+
+footer {
+    background-color: #222;
+    color: #aaa;
+}
+
+footer p {
+    margin: 0;
+}
+
+.btn-outline-secondary {
+    margin-left: 1rem;
+}
