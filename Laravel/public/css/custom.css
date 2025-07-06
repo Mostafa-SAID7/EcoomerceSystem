@@ -1,0 +1,100 @@
+:root {
+  /* Light Mode - Default Theme */
+  --primary-color: #C7A39A;
+  --secondary-color: #A8B9A0;
+  --background-color: #F5F1EB;
+  --text-color: #333333;
+  --accent-color: #D7B377;
+  --header-accent: #6B7A8F;
+
+  --btn-color: var(--primary-color);
+  --link-color: var(--header-accent);
+  --nav-bg: #ffffff;
+  --card-bg: #ffffff;
+}
+
+/* Dark Mode overrides */
+body.dark-mode {
+  --background-color: #121212;
+  --text-color: #f1f1f1;
+  --primary-color: #C7A39A;     /* keep branding */
+  --secondary-color: #A8B9A0;
+  --accent-color: #D7B377;
+  --header-accent: #A8B9A0;
+
+  --btn-color: #C7A39A;
+  --link-color: #D7B377;
+  --nav-bg: #1c1c1c;
+  --card-bg: #1e1e1e;
+}
+
+body {
+    background-color: var(--background-color);
+  color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.card-text {
+    color: var(--text-color);
+}
+
+h1.display-4 {
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-secondary {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+.dark-mode .card {
+    background-color: var(--dark-card);
+    color: var(--dark-text);
+}
+
+.dark-mode .navbar {
+    background-color: var(--dark-nav) !important;
+}
+
+.dark-mode .btn-primary {
+    background-color: var(--primary-color);
+}
+
+.dark-mode .btn-outline-secondary {
+    color: var(--dark-text);
+    border-color: var(--dark-text);
+}
+
+.container {
+    max-width: 1200px;
+}
