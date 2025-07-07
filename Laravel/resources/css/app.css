@@ -1,21 +1,107 @@
-header .nav-link {
-    color: #333;
-    font-weight: 500;
+:root {
+  --primary-color: #C7A39A;
+  --secondary-color: #A8B9A0;
+  --accent-color: #D7B377;
+  --bg-light: #F5F1EB;
+  --text-color: #333333;
+  --card-bg: #ffffff;
 }
 
-header .nav-link:hover {
-    color: #0d6efd;
+/* Base Reset */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
-footer {
-    background-color: #222;
-    color: #aaa;
+h1, h2, h3, h4 {
+  color: var(--text-color);
 }
 
-footer p {
-    margin: 0;
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent-color);
 }
 
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #b3867c;
+  border-color: #b3867c;
+}
 .btn-outline-secondary {
-    margin-left: 1rem;
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+.btn-outline-secondary:hover {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Sections */
+section {
+  padding: 3rem 0;
+}
+section h2 {
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.bg-light {
+  background-color: #fafafa !important;
+}
+
+/* Icons */
+.fs-2 {
+  font-size: 2rem !important;
+}
+
+/* Newsletter */
+form input.form-control {
+  border-radius: 0.3rem;
+}
+form button {
+  border-radius: 0.3rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  h1.display-4 {
+    font-size: 2rem;
+  }
+
+  .card-body {
+    text-align: center;
+  }
+
+  .col-md-3,
+  .col-md-4,
+  .col-md-5,
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
 }
