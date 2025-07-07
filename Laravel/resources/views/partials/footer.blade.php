@@ -10,7 +10,7 @@
                 </p>
             </div>
             <div>
-                <h2 class="text-xl font-semibold mb-3">Subscribe</h2>
+                <h2 class="text-xl font-semibold mb-3">Get updates and offers</h2>
                 <form class="flex flex-col sm:flex-row items-center">
                     <input type="email" placeholder="Enter your email"
                         class="w-full sm:w-auto flex-grow px-4 py-2 rounded-md text-gray-800 focus:outline-none mb-2 sm:mb-0 sm:mr-2">
@@ -66,10 +66,8 @@
                 &copy; {{ date('Y') }} MyBrand. All rights reserved.
             </div>
             <div class="flex items-center space-x-4">
-                <img src="{{ asset('images/visa.png') }}" alt="Visa" class="h-6">
-                <img src="{{ asset('images/mastercard.png') }}" alt="MasterCard" class="h-6">
-                <img src="{{ asset('images/paypal.png') }}" alt="PayPal" class="h-6">
-                <img src="{{ asset('images/amex.png') }}" alt="Amex" class="h-6">
+                <img src="{{ asset('images/payment.png') }}" alt="payment" class="h-6">
+
             </div>
         </div>
     </div>
