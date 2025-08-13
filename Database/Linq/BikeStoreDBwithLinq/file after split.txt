@@ -1,0 +1,329 @@
+using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using BikeStores.Data;
+
+namespace BikeStores
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using var context = new BikeStoresContext();
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("===== BikeStores LINQ Tasks =====");
+                Console.WriteLine("1. List all customers' names and emails");
+                Console.WriteLine("2. Orders processed by staff ID 3");
+                Console.WriteLine("3. Products in 'Mountain Bikes' category");
+                Console.WriteLine("4. Total orders per store");
+                Console.WriteLine("5. Orders not shipped yet");
+                Console.WriteLine("6. Customers and their order count");
+                Console.WriteLine("7. Products never ordered");
+                Console.WriteLine("8. Products with stock < 5");
+                Console.WriteLine("9. First product");
+                Console.WriteLine("10. Products by model year");
+                Console.WriteLine("11. Product order counts");
+                Console.WriteLine("12. Product count in category");
+                Console.WriteLine("13. Average list price");
+                Console.WriteLine("14. Product by ID");
+                Console.WriteLine("15. Products ordered with quantity > 3");
+                Console.WriteLine("16. Staff and orders processed");
+                Console.WriteLine("17. Active staff members");
+                Console.WriteLine("18. Products with brand and category");
+                Console.WriteLine("19. Completed orders");
+                Console.WriteLine("20. Products with total quantity sold");
+                Console.WriteLine("0. Exit");
+                Console.Write("Select Task Number: ");
+
+                var input = Console.ReadLine();
+                if (!int.TryParse(input, out int choice) || choice < 0 || choice > 20)
+                {
+                    Console.WriteLine("Invalid Choice! Press Enter to try again...");
+                    Console.ReadLine();
+                    continue;
+                }
+
+                if (choice == 0) break;
+
+                Console.Clear();
+                Console.WriteLine($"Executing Task {choice}...");
+
+                switch (choice)
+                {
+                    case 1:
+                        var customers = context.Customers.Select(c => new { c.FirstName, c.LastName, c.Email });
+                        foreach (var c in customers)
+                            Console.WriteLine($"{c.FirstName} {c.LastName} - {c.Email}");
+                        break;
+
+                    case 2:
+                        var ordersByStaff3 = context.Orders.Where(o => o.StaffId == 3);
+                        foreach (var order in ordersByStaff3)
+                            Console.WriteLine($"Order ID: {order.OrderId} - Customer ID: {order.CustomerId}");
+                        break;
+
+                    case 3:
+                        var mountainBikes = context.Products
+                            .Include(p => p.Category)
+                            .Where(p => p.Category.CategoryName == "Mountain Bikes");
+                        foreach (var p in mountainBikes)
+                            Console.WriteLine($"{p.ProductName} - {p.ListPrice:C}");
+                        break;
+
+                    case 4:
+                        var ordersPerStore = context.Orders
+                            .Include(o => o.Store)
+                            .GroupBy(o => o.Store.StoreName)
+                            .Select(g => new { StoreName = g.Key, OrdersCount = g.Count() });
+                        foreach (var store in ordersPerStore)
+                            Console.WriteLine($"{store.StoreName}: {store.OrdersCount} orders");
+                        break;
+
+                    case 5:
+                        var pendingOrders = context.Orders.Where(o => o.ShippedDate == null);
+                        foreach (var o in pendingOrders)
+                            Console.WriteLine($"Order ID: {o.OrderId} - Status: {o.OrderStatus}");
+                        break;
+
+                    case 6:
+                        var customerOrdersCount = context.Customers
+                            .Include(c => c.Orders)
+                            .Select(c => new {
+                                FullName = c.FirstName + " " + c.LastName,
+                                OrdersCount = c.Orders.Count
+                            });
+                        foreach (var c in customerOrdersCount)
+                            Console.WriteLine($"{c.FullName}: {c.OrdersCount} orders");
+                        break;
+
+                    case 7:
+                        var neverOrderedProducts = context.Products
+                            .Where(p => !p.OrderItems.Any());
+                        foreach (var p in neverOrderedProducts)
+                            Console.WriteLine($"{p.ProductName}");
+                        break;
+
+                    case 8:
+                        var lowStockProducts = context.Stocks
+                            .Include(s => s.Product)
+                            .Where(s => s.Quantity < 5)
+                            .Select(s => new { s.Product.ProductName, s.Quantity });
+                        foreach (var s in lowStockProducts)
+                            Console.WriteLine($"{s.ProductName} - Quantity: {s.Quantity}");
+                        break;
+
+                    case 9:
+                        var firstProduct = context.Products.FirstOrDefault();
+                        Console.WriteLine(firstProduct != null ? $"First Product: {firstProduct.ProductName}" : "No Products Found");
+                        break;
+
+                    case 10:
+                        while (true)
+                        {
+                            var availableYears = context.Products
+                                .Select(p => p.ModelYear)
+                                .Distinct()
+                                .OrderByDescending(y => y)
+                                .ToList();
+
+                            if (!availableYears.Any())
+                            {
+                                Console.WriteLine("No model years found.");
+                                break;
+                            }
+
+                            Console.WriteLine("Select Model Year:");
+                            for (int i = 0; i < availableYears.Count; i++)
+                                Console.WriteLine($"{i + 1}. {availableYears[i]}");
+                            Console.WriteLine("0. Return to Main Menu");
+
+                            Console.Write("Enter choice number: ");
+                            if (int.TryParse(Console.ReadLine(), out int choice10))
+                            {
+                                if (choice10 == 0) break;
+
+                                if (choice10 >= 1 && choice10 <= availableYears.Count)
+                                {
+                                    short selectedYear = availableYears[choice10 - 1];
+                                    var productsByYear = context.Products
+                                        .Where(p => p.ModelYear == selectedYear)
+                                        .ToList();
+
+                                    if (productsByYear.Any())
+                                    {
+                                        Console.WriteLine($"Products for Model Year {selectedYear}:");
+                                        foreach (var p in productsByYear)
+                                            Console.WriteLine($"{p.ProductName} - {p.ModelYear}");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("No products found for the selected year.");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Invalid selection.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Try again.");
+                            }
+
+                            Console.WriteLine("\nPress Enter to choose another year or type '0' to return to Menu...");
+                            string backInput = Console.ReadLine();
+                            if (backInput == "0") break;
+                        }
+                        break;
+
+
+                    case 11:
+                        var productOrderCounts = context.Products
+                            .Include(p => p.OrderItems)
+                            .Select(p => new { p.ProductName, OrderCount = p.OrderItems.Count });
+                        foreach (var p in productOrderCounts)
+                            Console.WriteLine($"{p.ProductName}: {p.OrderCount} orders");
+                        break;
+
+                    case 12:
+                        while (true)
+                        {
+                            var availableCategories = context.Categories
+                                .Select(c => c.CategoryName)
+                                .Distinct()
+                                .OrderBy(c => c)
+                                .ToList();
+
+                            if (!availableCategories.Any())
+                            {
+                                Console.WriteLine("No categories found.");
+                                break;
+                            }
+
+                            Console.WriteLine("Select Category:");
+                            for (int i = 0; i < availableCategories.Count; i++)
+                                Console.WriteLine($"{i + 1}. {availableCategories[i]}");
+                            Console.WriteLine("0. Return to Main Menu");
+
+                            Console.Write("Enter choice number: ");
+                            if (int.TryParse(Console.ReadLine(), out int choice12))
+                            {
+                                if (choice12 == 0) break;
+
+                                if (choice12 >= 1 && choice12 <= availableCategories.Count)
+                                {
+                                    var selectedCategory = availableCategories[choice12 - 1];
+                                    var productCountInCategory = context.Products
+                                        .Include(p => p.Category)
+                                        .Count(p => p.Category.CategoryName == selectedCategory);
+
+                                    Console.WriteLine($"\n{selectedCategory} has {productCountInCategory} products.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Invalid selection.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Try again.");
+                            }
+
+                            Console.WriteLine("\nPress Enter to choose another category or type '0' to return to Menu...");
+                            string backInput = Console.ReadLine();
+                            if (backInput == "0") break;
+                        }
+                        break;
+
+
+                    case 13:
+                        var avgListPrice = context.Products.Average(p => p.ListPrice);
+                        Console.WriteLine($"Average List Price: {avgListPrice:C}");
+                        break;
+
+                    case 14:
+                        Console.Write("Enter Product ID: ");
+                        if (int.TryParse(Console.ReadLine(), out int productId))
+                        {
+                            var product = context.Products.Find(productId);
+                            Console.WriteLine(product != null ? $"Product: {product.ProductName}" : "Product not found");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Product ID");
+                        }
+                        break;
+
+                    case 15:
+                        var productsOrderedMoreThan3 = context.OrderItems
+                            .Include(oi => oi.Product)
+                            .Where(oi => oi.Quantity > 3)
+                            .Select(oi => new { oi.Product.ProductName, oi.Quantity })
+                            .ToList();
+
+                        if (productsOrderedMoreThan3.Any())
+                        {
+                            foreach (var p in productsOrderedMoreThan3)
+                                Console.WriteLine($"{p.ProductName} - Quantity: {p.Quantity}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No products ordered with quantity > 3 found.");
+                        }
+                        break;
+
+                    case 16:
+                        var staffOrderCounts = context.Staffs
+                            .Include(s => s.Orders)
+                            .Select(s => new { FullName = s.FirstName + " " + s.LastName, OrdersProcessed = s.Orders.Count });
+                        foreach (var s in staffOrderCounts)
+                            Console.WriteLine($"{s.FullName}: {s.OrdersProcessed} orders");
+                        break;
+
+                    case 17:
+                        var activeStaffs = context.Staffs.Where(s => s.Active)
+                            .Select(s => new { s.FirstName, s.LastName, s.Phone });
+                        foreach (var s in activeStaffs)
+                            Console.WriteLine($"{s.FirstName} {s.LastName} - {s.Phone}");
+                        break;
+
+                    case 18:
+                        var productsWithBrandCategory = context.Products
+                            .Include(p => p.Brand)
+                            .Include(p => p.Category)
+                            .Select(p => new { p.ProductName, p.Brand.BrandName, p.Category.CategoryName });
+                        foreach (var p in productsWithBrandCategory)
+                            Console.WriteLine($"{p.ProductName} - Brand: {p.BrandName} - Category: {p.CategoryName}");
+                        break;
+
+                    case 19:
+                        var completedOrders = context.Orders.Where(o => o.OrderStatus == 4);
+                        foreach (var o in completedOrders)
+                            Console.WriteLine($"Order ID: {o.OrderId} - Status: Completed");
+                        break;
+
+                    case 20:
+                        var productTotalQuantitySold = context.Products
+                            .Include(p => p.OrderItems)
+                            .Select(p => new
+                            {
+                                p.ProductName,
+                                TotalQuantity = p.OrderItems.Sum(oi => (int?)oi.Quantity) ?? 0
+                            });
+                        foreach (var p in productTotalQuantitySold)
+                            Console.WriteLine($"{p.ProductName}: {p.TotalQuantity} units sold");
+                        break;
+
+                    default:
+                        Console.WriteLine("Task not implemented yet.");
+                        break;
+                }
+
+                Console.WriteLine("\nPress Enter to return to Menu...");
+                Console.ReadLine();
+            }
+        }
+    }
+}
