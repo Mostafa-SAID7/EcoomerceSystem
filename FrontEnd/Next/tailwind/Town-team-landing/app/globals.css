@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer components {
+  .font-sketchy {
+    font-family: "Kalam", cursive;
+  }
+
+  .sketchy-heading {
+    font-family: "Permanent Marker", cursive;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .sketchy-text {
+    font-family: "Kalam", cursive;
+    font-weight: 700;
+  }
+
+  .sketchy-text-shadow {
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .sketchy-box {
+    border-radius: 15% 85% 20% 80% / 85% 15% 80% 20%;
+    border: 3px solid currentColor;
+  }
+
+  .sketchy-circle {
+    border-radius: 50% 40% 60% 50% / 40% 60% 50% 40%;
+    border: 3px solid currentColor;
+  }
+
+  .sketchy-card {
+    border-radius: 15% 85% 20% 80% / 85% 15% 80% 20%;
+    border: 3px solid #1a1a1a;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .sketchy-card-hover:hover {
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  .sketchy-polaroid {
+    border-radius: 10% 90% 15% 85% / 90% 10% 85% 15%;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .sketchy-image {
+    border-radius: 10% 90% 15% 85% / 90% 10% 85% 15%;
+    border: 2px solid #1a1a1a;
+  }
+
+  .sketchy-btn {
+    border-radius: 20% 80% 25% 75% / 80% 20% 75% 25%;
+    border: 3px solid currentColor;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .sketchy-btn:hover {
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  .sketchy-btn-primary {
+    border-radius: 20% 80% 25% 75% / 80% 20% 75% 25%;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  .sketchy-btn-outline {
+    border-radius: 25% 75% 20% 80% / 75% 25% 80% 20%;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .sketchy-btn-ghost:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 30% 70% 25% 75% / 70% 30% 75% 25%;
+  }
+
+  .sketchy-badge {
+    border-radius: 25% 75% 30% 70% / 75% 25% 70% 30%;
+    border: 2px solid currentColor;
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .sketchy-line {
+    height: 4px;
+    background: linear-gradient(90deg, currentColor 0%, currentColor 100%);
+    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0%;
+  }
+
+  .sketchy-border {
+    border-image: url("data:image/svg+xml,%3csvg width='100' height='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m0,10 q25,5 50,0 t50,0' stroke='%23000' stroke-width='2' fill='none'/%3e%3c/svg%3e")
+      2;
+  }
+
+  .sketchy-underline {
+    position: relative;
+  }
+
+  .sketchy-underline:hover::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: currentColor;
+    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0%;
+    transform: scaleX(1);
+    transition: transform 0.3s ease;
+  }
+
+  .sketchy-input {
+    border-radius: 15% 85% 20% 80% / 85% 15% 80% 20%;
+    box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .sketchy-quote {
+    position: relative;
+    font-style: italic;
+  }
+
+  .sketchy-quote::before {
+    content: '"';
+    font-size: 3rem;
+    position: absolute;
+    left: -20px;
+    top: -10px;
+    color: #b22222;
+    font-family: "Permanent Marker", cursive;
+  }
+
+  .sketchy-highlight {
+    position: relative;
+    display: inline-block;
+  }
+
+  .sketchy-highlight::after {
+    content: "";
+    position: absolute;
+    bottom: 10%;
+    left: -5%;
+    right: -5%;
+    height: 20%;
+    background: rgba(178, 34, 34, 0.3);
+    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0%;
+    z-index: -1;
+  }
+
+  .sketchy-social-btn {
+    border-radius: 50% 40% 60% 50% / 40% 60% 50% 40%;
+    border: 2px solid currentColor;
+  }
+
+  /* Background Patterns */
+  .sketchy-pattern {
+    background-image: radial-gradient(
+        circle at 20% 50%,
+        transparent 20%,
+        rgba(0, 0, 0, 0.1) 21%,
+        rgba(0, 0, 0, 0.1) 34%,
+        transparent 35%,
+        transparent
+      ),
+      linear-gradient(
+        0deg,
+        transparent 24%,
+        rgba(0, 0, 0, 0.05) 25%,
+        rgba(0, 0, 0, 0.05) 26%,
+        transparent 27%,
+        transparent 74%,
+        rgba(0, 0, 0, 0.05) 75%,
+        rgba(0, 0, 0, 0.05) 76%,
+        transparent 77%,
+        transparent
+      );
+    background-size: 50px 50px;
+  }
+
+  .sketchy-dots {
+    background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .sketchy-grid {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .sketchy-texture {
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+      ), repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px);
+  }
+
+  .sketchy-waves {
+    background-image: radial-gradient(
+      ellipse at center,
+      transparent 20%,
+      rgba(255, 255, 255, 0.1) 21%,
+      rgba(255, 255, 255, 0.1) 25%,
+      transparent 25.5%,
+      transparent
+    );
+    background-size: 40px 40px;
+  }
+
+  .sketchy-lightning {
+    background-image: linear-gradient(
+      45deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.1) 40%,
+      rgba(255, 255, 255, 0.1) 60%,
+      transparent 60%
+    );
+    background-size: 20px 20px;
+  }
+
+  .sketchy-footer-pattern {
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.1) 10px,
+      rgba(255, 255, 255, 0.1) 11px
+    );
+  }
+}
