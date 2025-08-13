@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500;
+  }
+}
+
+@layer components {
+  .hieroglyph-font {
+    font-family: Impact, "Arial Black", "Franklin Gothic Bold", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .sketchy-border {
+    border: 3px solid #1b1b1b;
+    border-radius: 0;
+    position: relative;
+  }
+
+  .sketchy-border::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid #1b1b1b;
+    border-radius: 0;
+    transform: rotate(0.5deg);
+    z-index: -1;
+  }
+
+  .sketchy-border-thick {
+    border: 4px solid #1b1b1b;
+    border-radius: 0;
+    position: relative;
+  }
+
+  .sketchy-border-thick::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid #1b1b1b;
+    border-radius: 0;
+    transform: rotate(-0.5deg);
+    z-index: -1;
+  }
+
+  .sketchy-border-bottom {
+    border-bottom: 3px solid #1b1b1b;
+    position: relative;
+  }
+
+  .sketchy-border-bottom::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #1b1b1b;
+    transform: rotate(0.2deg);
+  }
+
+  .sketchy-button {
+    border: 3px solid #1b1b1b;
+    border-radius: 0;
+    position: relative;
+    transform: rotate(-0.5deg);
+    transition: all 0.2s ease;
+  }
+
+  .sketchy-button:hover {
+    transform: rotate(0.5deg);
+  }
+
+  .sketchy-button::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid #1b1b1b;
+    border-radius: 0;
+    transform: rotate(1deg);
+    z-index: -1;
+  }
+
+  .sketchy-line {
+    position: relative;
+    height: 4px;
+    background: #c89d29;
+    transform: rotate(-0.5deg);
+  }
+
+  .sketchy-line::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #c89d29;
+    transform: rotate(1deg);
+  }
+
+  /* Custom animations for Egyptian elements */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(2deg);
+    }
+  }
+
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Hieroglyphic text effects */
+  .hieroglyph-shadow {
+    text-shadow: 2px 2px 0px #1b1b1b, 4px 4px 0px rgba(27, 27, 27, 0.3);
+  }
+
+  /* Rough paper texture effect */
+  .paper-texture {
+    background-image: radial-gradient(circle at 25% 25%, rgba(200, 157, 41, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(29, 77, 79, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(174, 28, 28, 0.05) 0%, transparent 50%);
+  }
+
+  /* Sketch-style hover effects */
+  .sketch-hover {
+    transition: all 0.3s ease;
+  }
+
+  .sketch-hover:hover {
+    transform: rotate(-1deg) scale(1.02);
+    filter: drop-shadow(4px 4px 0px rgba(27, 27, 27, 0.3));
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e4d5b7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c89d29;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1b1b1b;
+}
+
+/* Selection color */
+::selection {
+  background: #c89d29;
+  color: #1b1b1b;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom focus styles */
+button:focus,
+a:focus {
+  outline: 3px solid #c89d29;
+  outline-offset: 2px;
+}
